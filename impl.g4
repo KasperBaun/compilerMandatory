@@ -4,25 +4,25 @@ grammar impl;
 
 start   :  cs+=command* EOF ;
 
-program : c=command                      	# SingleCommand
-	| '{' cs+=command* '}'           	# MultipleCommands
+program : c=command                      	    # SingleCommand
+	| '{' cs+=command* '}'           	        # MultipleCommands
 	;
 	
-command : x=ID '=' e=expr ';'	         	# Assignment
-	| 'output' e=expr ';'            	# Output
+command : x=ID '=' e=expr ';'	         	    # Assignment
+	| 'output' e=expr ';'            	        # Output
         | 'while' '('c=condition')' p=program 	# WhileLoop
 	;
 	
-expr	: e1=expr '+' e2=expr 			# Addition
-	| e1=expr '*' e2=expr 			# Multiplication
-	| c=FLOAT     	      			# Constant
-	| x=ID		      			# Variable
-	| '(' e=expr ')'      			# Parenthesis
-	| e1=expr '/' e2=expr			# Division
-	| e1=expr '-' e2=expr			# Subtraction
+expr	: e1=expr '+' e2=expr 		            # Addition
+	| e1=expr '*' e2=expr 			            # Multiplication
+	| c=FLOAT     	      			            # Constant
+	| x=ID		      			                # Variable
+	| '(' e=expr ')'      			            # Parenthesis
+	| e1=expr '/' e2=expr			            # Division
+	| e1=expr '-' e2=expr			            # Subtraction
 	;
 
-condition : e1=expr '!=' e2=expr 		# Unequal
+condition : e1=expr '!=' e2=expr 		        # Unequal
 	  // ... extend me 
 	  ;  
 

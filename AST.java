@@ -5,11 +5,11 @@ abstract class Expr extends AST{
     abstract public Double eval(Environment env);
 }
 
-class Addition extends Expr{
+class Division extends Expr{
     Expr e1,e2;
-    Addition(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
+    Division(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
     public Double eval(Environment env){
-	return e1.eval(env)+e2.eval(env);
+	return e1.eval(env)/e2.eval(env);
     }
 }
 
@@ -18,6 +18,22 @@ class Multiplication extends Expr{
     Multiplication(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
     public Double eval(Environment env){
 	return e1.eval(env)*e2.eval(env);
+    }
+}
+
+class Addition extends Expr{
+    Expr e1,e2;
+    Addition(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
+    public Double eval(Environment env){
+	return e1.eval(env)+e2.eval(env);
+    }
+}
+
+class Subtraction extends Expr{
+    Expr e1,e2;
+    Subtraction(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
+    public Double eval(Environment env){
+	return e1.eval(env)-e2.eval(env);
     }
 }
 

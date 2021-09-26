@@ -108,5 +108,15 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 	Expr v2=(Expr)visit(ctx.e2);
 	return new Unequal(v1,v2);
     }
+
+	@Override
+	public AST visitSubtraction(implParser.SubtractionContext ctx) {
+		return new Subtraction((Expr) visit(ctx.e1), (Expr)visit(ctx.e2));
+	}
+
+	@Override
+	public AST visitDivision(implParser.DivisionContext ctx) {
+		return new Division((Expr) visit(ctx.e1), (Expr)visit(ctx.e2));
+	}
 }
 
