@@ -119,3 +119,21 @@ class Unequal extends Condition{
     }
  
 }
+
+class Equal extends Condition{
+    Expr e1,e2;
+    Equal(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
+    public Boolean eval(Environment env){
+	return e1.eval(env).equals(e2.eval(env));
+    }
+ 
+}
+
+class GreaterThan extends Condition{
+    Expr e1,e2;
+    GreaterThan(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
+    public Boolean eval(Environment env){
+	return e1.eval(env)>(e2.eval(env));
+    }
+ 
+}

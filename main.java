@@ -91,12 +91,24 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 	return new Variable(ctx.x.getText());
     };
     
-    public AST visitAddition(implParser.AdditionContext ctx){
-	return new Addition((Expr) visit(ctx.e1), (Expr)visit(ctx.e2));
+    public AST visitAdditionAndSubtraction(implParser.AdditionAndSubtractionContext ctx){
+		if(ctx.op.getText().equals("+")){
+		return new Addition((Expr) visit(ctx.e1), (Expr)visit(ctx.e2));
+		}
+			else  if(ctx.op.getText().equals("-")){
+	return new Subtraction((Expr) visit(ctx.e1), (Expr)visit(ctx.e2));
+			} else return null;
     };
 
-    public AST visitMultiplication(implParser.MultiplicationContext ctx){
-	return new Multiplication((Expr) visit(ctx.e1), (Expr)visit(ctx.e2));
+    public AST visitMultiplicationAndDivision(implParser.MultiplicationAndDivisionContext ctx){
+		if(ctx.op.getText().equals("*")){
+			return new Multiplication((Expr) visit(ctx.e1), (Expr)visit(ctx.e2));
+		}
+		else if (ctx.op.getText().equals("/")){
+			return new Division((Expr) visit(ctx.e1), (Expr)visit(ctx.e2));
+		} else return null;
+
+	
     };
 
     public AST visitConstant(implParser.ConstantContext ctx){
@@ -110,13 +122,73 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
     }
 
 	@Override
-	public AST visitSubtraction(implParser.SubtractionContext ctx) {
-		return new Subtraction((Expr) visit(ctx.e1), (Expr)visit(ctx.e2));
+	public AST visitStringAssign(implParser.StringAssignContext ctx) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public AST visitDivision(implParser.DivisionContext ctx) {
-		return new Division((Expr) visit(ctx.e1), (Expr)visit(ctx.e2));
+	public AST visitArrayAssign(implParser.ArrayAssignContext ctx) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public AST visitForLoop(implParser.ForLoopContext ctx) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AST visitIfStatement(implParser.IfStatementContext ctx) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public AST visitEquals(implParser.EqualsContext ctx) {
+		Expr v1=(Expr)visit(ctx.e1);
+		Expr v2=(Expr)visit(ctx.e2);
+	return new Equal(v1,v2);
+	}
+
+	@Override
+	public AST visitGreaterThan(implParser.GreaterThanContext ctx) {
+		Expr v1=(Expr)visit(ctx.e1);
+		Expr v2=(Expr)visit(ctx.e2);
+	return new GreaterThan(v1,v2);
+	}
+
+	@Override
+	public AST visitLogicalAnd(implParser.LogicalAndContext ctx) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AST visitLesserThanOrEquals(implParser.LesserThanOrEqualsContext ctx) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AST visitGreaterThanOrEquals(implParser.GreaterThanOrEqualsContext ctx) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AST visitLogicalOr(implParser.LogicalOrContext ctx) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AST visitLesserThan(implParser.LesserThanContext ctx) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
 

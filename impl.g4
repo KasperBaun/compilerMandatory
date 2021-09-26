@@ -24,9 +24,9 @@ expr	: '(' e=expr ')'      			        # Parenthesis
 	| x=ID		      				# Variable
 	;
 
-condition : e1=expr '!=' e2=expr 		        # Unequal
-	| con1=condition  '&&' con2=condition 		#LogicalAnd
+condition : con1=condition  '&&' con2=condition 		#LogicalAnd
 	| con1=condition  '||' con2=condition		#LogicalOr
+    | e1=expr '!=' e2=expr 		        # Unequal
 	| e1=expr '==' e2=expr 				#Equals
 	| e1=expr '>' e2=expr 				#GreaterThan
 	| e1=expr '>=' e2=expr 				#GreaterThanOrEquals
