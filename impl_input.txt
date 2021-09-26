@@ -1,6 +1,6 @@
 /* Example program for the imperative language impl */
 
-n=5;
+n=10;
 result=1;
 
 while(n!=0){
