@@ -13,12 +13,12 @@ command : x=ID '=' e=expr ';'	         	    # Assignment
         | 'while' '('c=condition')' p=program 	# WhileLoop
 	;
 	
-expr	: e1=expr '+' e2=expr 		            # Addition
+expr	: '(' e=expr ')'      			        # Parenthesis
+    | e1=expr '/' e2=expr			            # Division
 	| e1=expr '*' e2=expr 			            # Multiplication
 	| c=FLOAT     	      			            # Constant
 	| x=ID		      			                # Variable
-	| '(' e=expr ')'      			            # Parenthesis
-	| e1=expr '/' e2=expr			            # Division
+    | e1=expr '+' e2=expr 		                # Addition
 	| e1=expr '-' e2=expr			            # Subtraction
 	;
 
