@@ -87,3 +87,4 @@ fabric.properties
 .idea/runConfigurations.xml
 .idea/vcs.xml
 compilerMandatory.iml
+.vscode/settings.json
