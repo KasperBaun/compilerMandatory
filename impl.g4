@@ -10,7 +10,7 @@ program : c=command                      	    		# SingleCommand
 	
 command : x=ID '=' e=expr ';'	         	    		# Assignment
 	| x=ID '=' '"' s=STR '"' ';'				# StringAssign
-	| x=ID '[' i=expr ']' '=' n=expr ';'			# ArrayAssign
+	| x=ID '[' i=NUM+ ']' '=' n=expr ';'			# ArrayAssign
 	| 'output' e=expr ';'            	    		# Output
         | 'while' '('c=condition')' p=program 			# WhileLoop
 	| 'for' '(' x=ID '=' i=expr '..' n=expr ')' p=program 	# ForLoop
@@ -23,16 +23,15 @@ expr	: '(' e=expr ')'      			        	# Parenthesis
 	| c=FLOAT     	    					# Constant
 	| x=ID		      					# Variable
 	;
-
-condition : e1=expr '!=' e2=expr 		        	# Unequal
-	| con1=condition  '&&' con2=condition 			#LogicalAnd
+	
+condi 	:  con1=condition  '&&' con2=condition 			#LogicalAnd
 	| con1=condition  '||' con2=condition			#LogicalOr
-	| e1=expr '==' e2=expr 					#Equals
-	| e1=expr '>' e2=expr 					#GreaterThan
-	| e1=expr '>=' e2=expr 					#GreaterThanOrEquals
-	| e1=expr '<' e2=expr 					#LesserThan
-	| e1=expr '<=' e2=expr 					#LesserThanOrEquals
+	| e1=expr lop=logop e2=expr 				#LogicalOperators
 	;  
+
+logop	: ‘!=’ | ‘==’ | ‘>’| ‘>=’ | ‘<’ | ‘<=’			#LogicalOperators 
+	;	
+ 
 
 ID		: ALPHA (ALPHA|NUM)* ;
 STR		: (ALPHA|NUM)* ;
