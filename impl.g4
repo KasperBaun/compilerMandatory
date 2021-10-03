@@ -24,12 +24,17 @@ expr	: '(' e=expr ')'      			        	# Parenthesis
 	| x=ID		      					# Variable
 	;
 	
-condi 	: con1=condi   '&&' con2=condi  			#LogicalAnd
-	| con1=condi   '||' con2=condi 				#LogicalOr
-	| e1=expr lop=logop e2=expr 				#LogicalOperators
+condi 	: e1=expr '!=' e2=expr	 		        	# Unequal
+	| con1=condi  '&&' con2=condi	 			#LogicalAnd
+	| con1=condi  '||' con2=condi				#LogicalOr
+	| e1=expr '==' e2=expr 					#Equals
+	| e1=expr '>' e2=expr 					#GreaterThan
+	| e1=expr '>=' e2=expr 					#GreaterThanOrEquals
+	| e1=expr '<' e2=expr 					#LesserThan
+	| e1=expr '<=' e2=expr 					#LesserThanOrEquals
 	;  
 
-logop	: '!=' | '==' | '>' | '>=' | '<' | '<='			#LogicalOperators 
+logop	: '!=' | '==' | '>' | '>=' | '<' | '<='			#LogicalOperators - NOT used atm due to issues in main.java implementing methods in AST
 	;	
  
 
