@@ -23,10 +23,22 @@ expr	: '(' e=expr ')'      			        	# Parenthesis
 	| c=FLOAT     	    					# Constant
 	| x=ID		      					# Variable
 	;
+<<<<<<< HEAD
 	
 condi 	:  con1=condition  '&&' con2=condition 			#LogicalAnd
 	| con1=condition  '||' con2=condition			#LogicalOr
 	| e1=expr lop=logop e2=expr 				#LogicalOperators
+=======
+
+condition : con1=condition  '&&' con2=condition 		#LogicalAnd
+	| con1=condition  '||' con2=condition		#LogicalOr
+    | e1=expr '!=' e2=expr 		        # Unequal
+	| e1=expr '==' e2=expr 				#Equals
+	| e1=expr '>' e2=expr 				#GreaterThan
+	| e1=expr '>=' e2=expr 				#GreaterThanOrEquals
+	| e1=expr '<' e2=expr 				#LesserThan
+	| e1=expr '<=' e2=expr 				#LesserThanOrEquals
+>>>>>>> ce84440f1ff841fab65cb4d1484aa78ee39d7af5
 	;  
 
 logop	: ‘!=’ | ‘==’ | ‘>’| ‘>=’ | ‘<’ | ‘<=’			#LogicalOperators 
