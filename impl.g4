@@ -8,7 +8,7 @@ program : c=command                      	    		# SingleCommand
 	| '{' cs+=command* '}'           	  		# MultipleCommands
 	;
 	
-command : x=ID '=' e=expr ';'	         	    		# Assignment
+command : x=ID '=' e=expr+ ';'	         	    		# Assignment
 	| x=ID '=' '"' s=ID '"' ';'				# StringAssign
 	| x=ID '[' i=expr ']' '=' e=expr ';'			# ArrayAssign
 	| 'output' e=expr ';'            	    		# Output
@@ -17,10 +17,10 @@ command : x=ID '=' e=expr ';'	         	    		# Assignment
 	| 'if' '(' c=condi ')' p=program			#IfStatement
 	;
 	
-expr	: c=FLOAT | e=expr 	    				# Constant
-	| e1=expr op=('*'|'/')  e2=expr				# MultiplicationAndDivision
+expr	: e1=expr op=('*'|'/')  e2=expr				# MultiplicationAndDivision
 	| e1=expr op=('+'|'-') e2=expr 				# AdditionAndSubtraction
 	| x=ID		      					# Variable
+	| c=FLOAT 	    					# Constant
 	| x=ID '[' e=expr ']'					# Array
 	| '(' e=expr ')'      			        	# Parenthesis 
 	;
