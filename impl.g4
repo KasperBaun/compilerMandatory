@@ -10,7 +10,7 @@ program : c=command                      	    		# SingleCommand
 	
 command : x=ID '=' e=expr ';'	         	    		# Assignment
 	| x=ID '=' '"' s=STR '"' ';'				# StringAssign
-	| x=ID '[' i=NUM+ ']' '=' n=expr ';'			# ArrayAssign
+	| x=ID '[' i=expr ']' '=' n=expr ';'			# ArrayAssign
 	| 'output' e=expr ';'            	    		# Output
         | 'while' '(' c=condi ')' p=program 			# WhileLoop
 	| 'for' '(' x=ID '=' i=expr '..' n=expr ')' p=program 	# ForLoop
