@@ -17,12 +17,13 @@ command : x=ID '=' e=expr ';'	         	    		# Assignment
 	| 'if' '(' c=condi ')' p=program			#IfStatement
 	;
 	
-expr	: e1=expr op=MULTIDIV e2=expr 				# MultiplicationAndDivision
+expr	: e = expr+ 
+	| e1=expr op=MULTIDIV e2=expr 				# MultiplicationAndDivision
 	| e1=expr op=ADDSUB e2=expr 				# AdditionAndSubtraction
 	| c=FLOAT     	    					# Constant
 	| x=ID		      					# Variable
 	| x=ID '[' e=expr ']'					# Array
-	| '(' e=expr ')'      			        	# Parenthesis
+	| '(' e=expr ')'      			        	# Parenthesis 
 	;
 	
 condi 	: e1=expr '!=' e2=expr	 		        	# Unequal
