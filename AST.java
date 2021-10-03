@@ -197,7 +197,7 @@ class LogicalAnd extends Condition{
     Condition c1,c2;
     LogicalAnd(Condition c1,Condition c2){this.c1=c1; this.c2=c2;}
     public Boolean eval(Environment env){
-	return c1.eval(env)==(c2.eval(env));
+	return c1.eval(env)&&(c2.eval(env));
     }
  
 }
@@ -206,7 +206,7 @@ class LogicalOr extends Condition{
     Condition c1,c2;
     LogicalOr(Condition c1,Condition c2){this.c1=c1; this.c2=c2;}
     public Boolean eval(Environment env){
-	return c1.eval(env)&&(c2.eval(env));
+	return c1.eval(env)||(c2.eval(env));
     }
  
 }
