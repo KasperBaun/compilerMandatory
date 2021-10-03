@@ -11,9 +11,11 @@ while(n!=0){
 
 a = 10;
 b = 30;
-while(b>a) {
-a=a+1;
+for(i=0..10) {
+a = a+1;
 } 
 result = a*b;
 output result;
+
+
 

@@ -107,6 +107,34 @@ class While extends Command{
     }
 }
 
+class If extends Command{
+    Condition c;
+    Command body;
+    If(Condition c, Command body){
+	this.c=c; this.body=body;
+    }
+    public void eval(Environment env){
+	if (c.eval(env))
+	    body.eval(env);
+    }
+}
+
+class For extends Command{
+    Expr i,n;
+    Command body;
+    For(Expr i,Expr n, Command body){
+        this.i=i; this.n=n; this.body=body;
+    }
+    public void eval(Environment env){
+        double index;
+        double maxIndex = n.eval(env);
+        for(index = i.eval(env); index<maxIndex; index++){
+            body.eval(env);
+        }
+    }
+}
+
+
 abstract class Condition extends AST{
     abstract public Boolean eval(Environment env);
 }
@@ -115,7 +143,7 @@ class Unequal extends Condition{
     Expr e1,e2;
     Unequal(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
     public Boolean eval(Environment env){
-	return ! e1.eval(env).equals(e2.eval(env));
+	return !e1.eval(env).equals(e2.eval(env));
     }
  
 }
@@ -134,6 +162,51 @@ class GreaterThan extends Condition{
     GreaterThan(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
     public Boolean eval(Environment env){
 	return e1.eval(env)>(e2.eval(env));
+    }
+ 
+}
+
+class GreaterThanOrEquals extends Condition{
+    Expr e1,e2;
+    GreaterThanOrEquals(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
+    public Boolean eval(Environment env){
+	return e1.eval(env)>=(e2.eval(env));
+    }
+ 
+}
+
+class LesserThan extends Condition{
+    Expr e1,e2;
+    LesserThan(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
+    public Boolean eval(Environment env){
+	return e1.eval(env)<(e2.eval(env));
+    }
+ 
+}
+
+class LesserThanOrEquals extends Condition{
+    Expr e1,e2;
+    LesserThanOrEquals(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
+    public Boolean eval(Environment env){
+	return e1.eval(env)<=(e2.eval(env));
+    }
+ 
+}
+
+class LogicalAnd extends Condition{
+    Condition c1,c2;
+    LogicalAnd(Condition c1,Condition c2){this.c1=c1; this.c2=c2;}
+    public Boolean eval(Environment env){
+	return c1.eval(env)&&(c2.eval(env));
+    }
+ 
+}
+
+class LogicalOr extends Condition{
+    Condition c1,c2;
+    LogicalOr(Condition c1,Condition c2){this.c1=c1; this.c2=c2;}
+    public Boolean eval(Environment env){
+	return c1.eval(env)||(c2.eval(env));
     }
  
 }
