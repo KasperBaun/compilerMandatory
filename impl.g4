@@ -9,8 +9,8 @@ program : c=command                      	    		# SingleCommand
 	;
 	
 command : x=ID '=' e=expr ';'	         	    		# Assignment
-	| x=ID '=' '"' s=STR '"' ';'				# StringAssign
-	| x=ID '[' i=expr ']' '=' n=expr ';'			# ArrayAssign
+	| x=ID '=' '"' s=ID '"' ';'				# StringAssign
+	| x=ID '[' i=expr ']' '=' e=expr ';'			# ArrayAssign
 	| 'output' e=expr ';'            	    		# Output
         | 'while' '(' c=condi ')' p=program 			# WhileLoop
 	| 'for' '(' x=ID '=' i=expr '..' n=expr ')' p=program 	# ForLoop
@@ -36,7 +36,6 @@ condi 	: e1=expr '!=' e2=expr	 		        	# Unequal
 
 
 ID		: ALPHA (ALPHA|NUM)* ;
-STR		: (ALPHA|NUM)* ;
 FLOAT		: '-'? NUM+ ('.' NUM+)? ;
 MULTIDIV	:( '*' | '/');
 ADDSUB		: ('+' | '-');
