@@ -18,7 +18,7 @@ command : x=ID '=' e=expr ';'	         	    		# Assignment
 	;
 	
 expr	: c=FLOAT     	    					# Constant
-	| e1=expr op=('*'|'/'  e2=expr 				# MultiplicationAndDivision
+	| e1=expr op=('*'|'/')  e2=expr				# MultiplicationAndDivision
 	| e1=expr op=('+'|'-') e2=expr 				# AdditionAndSubtraction
 	| x=ID		      					# Variable
 	| x=ID '[' e=expr ']'					# Array
