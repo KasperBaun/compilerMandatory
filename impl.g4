@@ -9,7 +9,7 @@ program : c=command                      	    	# SingleCommand
 	;
 	
 command : x=ID '=' e=expr ';'	         	    	# Assignment
-	| x=ID '=' '"' s=ID '"' ';'			# StringAssign
+	| x=ID '=' '"' s=STR '"' ';'			# StringAssign
 	| x=ID '[' i=expr ']' '=' n=expr ';'		# ArrayAssign
 	| 'output' e=expr ';'            	    	# Output
         | 'while' '('c=condition')' p=program 		# WhileLoop
@@ -34,14 +34,16 @@ condition : con1=condition  '&&' con2=condition 		#LogicalAnd
 	| e1=expr '<=' e2=expr 				#LesserThanOrEquals
 	;  
 
-ID    : ALPHA (ALPHA|NUM)* ;
-FLOAT : '-'? NUM+ ('.' NUM+)? ;
-MULTIDIV :( '*' | '/');
-ADDSUB : ('+' | '-');
+ID		: ALPHA (ALPHA|NUM)* ;
+STR		: (ALPHA|NUM)* ;
+FLOAT		: '-'? NUM+ ('.' NUM+)? ;
+MULTIDIV	:( '*' | '/');
+ADDSUB		: ('+' | '-');
 
-ALPHA : [a-zA-Z_ÆØÅæøå] ;
-NUM   : [0-9] ;
+ALPHA		: [a-zA-Z_ÆØÅæøå] ;
+NUM		: [0-9] ;
 
-WHITESPACE : [ \n\t\r]+ -> skip;
-COMMENT    : '//'~[\n]*  -> skip;
-COMMENT2   : '/*' (~[*] | '*'~[/]  )*   '*/'  -> skip;
+
+WHITESPACE	: [ \n\t\r]+ -> skip;
+COMMENT		: '//'~[\n]*  -> skip;
+COMMENT2	: '/*' (~[*] | '*'~[/]  )*   '*/'  -> skip;
