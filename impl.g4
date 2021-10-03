@@ -17,9 +17,9 @@ command : x=ID '=' e=expr ';'	         	    		# Assignment
 	| 'if' '(' c=condi ')' p=program			#IfStatement
 	;
 	
-expr	: e1=expr op=MULTIDIV e2=expr 				# MultiplicationAndDivision
-	| e1=expr op=ADDSUB e2=expr 				# AdditionAndSubtraction
-	| c=FLOAT     	    					# Constant
+expr	: c=FLOAT     	    					# Constant
+	| e1=expr op=('*'|'/'  e2=expr 				# MultiplicationAndDivision
+	| e1=expr op=('+'|'-') e2=expr 				# AdditionAndSubtraction
 	| x=ID		      					# Variable
 	| x=ID '[' e=expr ']'					# Array
 	| '(' e=expr ')'      			        	# Parenthesis 
@@ -38,12 +38,9 @@ condi 	: e1=expr '!=' e2=expr	 		        	# Unequal
 
 ID		: ALPHA (ALPHA|NUM)* ;
 FLOAT		: '-'? NUM+ ('.' NUM+)? ;
-MULTIDIV	:( '*' | '/');
-ADDSUB		: ('+' | '-');
 
 ALPHA		: [a-zA-Z_ÆØÅæøå] ;
 NUM		: [0-9] ;
-
 
 WHITESPACE	: [ \n\t\r]+ -> skip;
 COMMENT		: '//'~[\n]*  -> skip;
