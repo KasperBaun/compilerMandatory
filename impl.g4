@@ -34,7 +34,7 @@ condi 	: e1=expr '!=' e2=expr	 		        	# Unequal
 	| e1=expr '<=' e2=expr 					#LesserThanOrEquals
 	;  
 
-logop	: '!=' | '==' | '>' | '>=' | '<' | '<='			#LogicalOperators - NOT used atm due to issues in main.java implementing methods in AST
+logop	: '!=' | '==' | '>' | '>=' | '<' | '<='			#LogicalOperators NOT used atm due to issues in main.java implementing methods in AST
 	;	
  
 
