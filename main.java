@@ -82,6 +82,19 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 	Command body=(Command)visit(ctx.p);
 	return new While(c,body);
     }
+
+	public AST visitIfStatement(implParser.IfStatementContext ctx) {
+		Condition c=(Condition)visit(ctx.c);
+		Command body=(Command)visit(ctx.p);
+		return new If(c,body);
+	}
+
+	public AST visitForLoop(implParser.ForLoopContext ctx) {
+		Expr i=(Expr)visit(ctx.i);
+		Expr n=(Expr)visit(ctx.n);
+		Command body=(Command)visit(ctx.p);
+		return new For(i,n,body);
+	}
     
     public AST visitParenthesis(implParser.ParenthesisContext ctx){
 	return visit(ctx.e);
@@ -133,19 +146,7 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 		return null;
 	}
 
-	@Override
-	public AST visitForLoop(implParser.ForLoopContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AST visitIfStatement(implParser.IfStatementContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
+	
 	@Override
 	public AST visitEquals(implParser.EqualsContext ctx) {
 		Expr v1=(Expr)visit(ctx.e1);
