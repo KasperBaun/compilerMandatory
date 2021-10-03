@@ -24,8 +24,8 @@ expr	: '(' e=expr ')'      			        	# Parenthesis
 	| x=ID		      					# Variable
 	;
 	
-condi 	:  con1=condition  '&&' con2=condition 			#LogicalAnd
-	| con1=condition  '||' con2=condition			#LogicalOr
+condi 	: con1=condi   '&&' con2=condi  			#LogicalAnd
+	| con1=condi   '||' con2=condi 				#LogicalOr
 	| e1=expr lop=logop e2=expr 				#LogicalOperators
 	;  
 
