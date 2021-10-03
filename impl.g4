@@ -17,7 +17,7 @@ command : x=ID '=' e=expr ';'	         	    		# Assignment
 	| 'if' '(' c=condi ')' p=program			#IfStatement
 	;
 	
-expr	: c=FLOAT     	    					# Constant
+expr	: c=FLOAT | e=expr 	    				# Constant
 	| e1=expr op=('*'|'/')  e2=expr				# MultiplicationAndDivision
 	| e1=expr op=('+'|'-') e2=expr 				# AdditionAndSubtraction
 	| x=ID		      					# Variable
