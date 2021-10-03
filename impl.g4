@@ -12,9 +12,9 @@ command : x=ID '=' e=expr ';'	         	    		# Assignment
 	| x=ID '=' '"' s=STR '"' ';'				# StringAssign
 	| x=ID '[' i=NUM+ ']' '=' n=expr ';'			# ArrayAssign
 	| 'output' e=expr ';'            	    		# Output
-        | 'while' '('c=condition')' p=program 			# WhileLoop
+        | 'while' '(' c=condi ')' p=program 			# WhileLoop
 	| 'for' '(' x=ID '=' i=expr '..' n=expr ')' p=program 	# ForLoop
-	| 'if' '(' c=condition ')' p=program			#IfStatement
+	| 'if' '(' c=condi ')' p=program			#IfStatement
 	;
 	
 expr	: '(' e=expr ')'      			        	# Parenthesis
@@ -29,7 +29,7 @@ condi 	:  con1=condition  '&&' con2=condition 			#LogicalAnd
 	| e1=expr lop=logop e2=expr 				#LogicalOperators
 	;  
 
-logop	: ‘!=’ | ‘==’ | ‘>’| ‘>=’ | ‘<’ | ‘<=’			#LogicalOperators 
+logop	: '!=' | '==' | '>' | '>=' | '<' | '<='			#LogicalOperators 
 	;	
  
 
