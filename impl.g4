@@ -9,38 +9,34 @@ program : c=command                      	    			# SingleCommand
 	;
 	
 command : 
-	  x=ID '=' e=expr+ ';'	         	    				# Assignment
+      x=ID '=' e=expr';'	         	    				# Assignment
 	| x=ID '=' '"' s=ID '"' ';'								# StringAssign
 	| x=ID '[' i=expr ']' '=' e=expr ';'					# ArrayAssign
 	| 'output' e=expr ';'            	    				# Output
     | 'while' '(' c=condi ')' p=program		 				# WhileLoop
 	| 'for' '(' x=ID '=' i=expr '..' n=expr ')' p=program 	# ForLoop
-	| 'if' '(' c=condi ')' p=program						#IfStatement
+	| 'if' '(' c=condi ')' p=program						# IfStatement
 	;
 	
 expr: 
 	  e1=expr op=('*'|'/')  e2=expr							# MultiplicationAndDivision
-	| e1=expr op=('+'|'-') e2=expr 							# AdditionAndSubtraction
-	| x=ID		      										# Variable
+	| e1=expr op=('-'|'+')  e2=expr 						# AdditionAndSubtraction
+	| x=ID						      						# Variable
 	| c=FLOAT 	    										# Constant
 	| x=ID '[' e=expr ']'									# Array
 	| '(' e=expr ')'      			        				# Parenthesis 
 	;
 	
 condi: 
-	  e1=expr '!=' e2=expr	 		        				# Unequal
-	| con1=condi  '&&' con2=condi	 						# LogicalAnd
+	  con1=condi  '&&' con2=condi	 						# LogicalAnd
 	| con1=condi  '||' con2=condi							# LogicalOr
-	| e1=expr '==' e2=expr 									# Equals
-	| e1=expr '>' e2=expr 									# GreaterThan
-	| e1=expr '>=' e2=expr 									# GreaterThanOrEquals
-	| e1=expr '<' e2=expr 									# LesserThan
-	| e1=expr '<=' e2=expr 									# LesserThanOrEquals
+	| e1=expr eq=('=='|'!='|'>'|'>='|'<'|'<=') e2=expr 		# Equality
 	;  
 
 
-ID			: ALPHA (ALPHA|NUM)* ;
-FLOAT		: '-'? NUM+ ('.' NUM+)? ;
+
+ID			: ALPHA(ALPHA|NUM)* ;
+FLOAT		: '-'?NUM+ ('.' NUM+)? ;
 
 ALPHA		: [a-zA-Z_ÆØÅæøå] ;
 NUM			: [0-9] ;

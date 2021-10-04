@@ -103,7 +103,7 @@ class While extends Command{
     }
     public void eval(Environment env){
 	    while (c.eval(env)){
-	        visitSingleCommand(body)
+	        body.eval(env);
         }
     }
 }
@@ -140,62 +140,36 @@ abstract class Condition extends AST{
     abstract public Boolean eval(Environment env);
 }
 
-class Unequal extends Condition{
+class Equality extends Condition{
     Expr e1,e2;
-    Unequal(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
+    String op;
+    Equality(Expr e1,Expr e2, String op){this.e1=e1; this.e2=e2; this.op=op;}
     public Boolean eval(Environment env){
-        System.out.println("e1: " + e1.eval(env));
-        System.out.println("e2: " + e2.eval(env));
-        System.out.println("unequal: " + ((e1.eval(env)!=(e2.eval(env)))));
-	return (e1.eval(env)!=(e2.eval(env)));
+        double x1 = e1.eval(env);
+        double x2 = e2.eval(env);
+       if(op.equals("==")){
+           return x1==x2;
+       }
+       if(op.equals("!=")){
+        return x1!=x2;
+        }
+        if(op.equals(">")){
+            return x1>x2;
+        }
+        if(op.equals(">=")){
+            return x1>=x2;
+        }
+        if(op.equals("<")){
+            return x1<x2;
+        }
+        if(op.equals("<=")){
+            return x1<=x2;
+        }
+        return null;
     }
  
 }
 
-class Equal extends Condition{
-    Expr e1,e2;
-    Equal(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
-    public Boolean eval(Environment env){
-	return e1.eval(env).equals(e2.eval(env));
-    }
- 
-}
-
-class GreaterThan extends Condition{
-    Expr e1,e2;
-    GreaterThan(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
-    public Boolean eval(Environment env){
-	return e1.eval(env)>(e2.eval(env));
-    }
- 
-}
-
-class GreaterThanOrEquals extends Condition{
-    Expr e1,e2;
-    GreaterThanOrEquals(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
-    public Boolean eval(Environment env){
-	return e1.eval(env)>=(e2.eval(env));
-    }
- 
-}
-
-class LesserThan extends Condition{
-    Expr e1,e2;
-    LesserThan(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
-    public Boolean eval(Environment env){
-	return e1.eval(env)<(e2.eval(env));
-    }
- 
-}
-
-class LesserThanOrEquals extends Condition{
-    Expr e1,e2;
-    LesserThanOrEquals(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
-    public Boolean eval(Environment env){
-	return e1.eval(env)<=(e2.eval(env));
-    }
- 
-}
 
 class LogicalAnd extends Condition{
     Condition c1,c2;

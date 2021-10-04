@@ -54,7 +54,7 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 	    program=new Sequence(program,(Command)visit(c));
 	return program;
     }
-
+	
     public AST visitSingleCommand(implParser.SingleCommandContext ctx){
 	return visit(ctx.c);
     }
@@ -71,6 +71,7 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
  	Expr e=(Expr)visit(ctx.e);
 	return new Assignment(v,e);
     }
+
     
     public AST visitOutput(implParser.OutputContext ctx){
 	Expr e=(Expr)visit(ctx.e);
@@ -79,8 +80,8 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 
     public AST visitWhileLoop(implParser.WhileLoopContext ctx){
 	Condition c=(Condition)visit(ctx.c);
-	while(ctx.c)
-	return new While(c,body);
+	Command p=(Command)visit(ctx.p);
+	return new While(c,p);
     }
 
 	public AST visitIfStatement(implParser.IfStatementContext ctx) {
@@ -128,11 +129,12 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 	return new Constant(Double.parseDouble(ctx.c.getText())); 
     };
 
-    public AST visitUnequal(implParser.UnequalContext ctx){
-	Expr v1=(Expr)visit(ctx.e1);
-	Expr v2=(Expr)visit(ctx.e2);
-	return new Unequal(v1,v2);
-    }
+    public AST visitEquality(implParser.EqualityContext ctx){
+	Expr e1=(Expr)visit(ctx.e1);
+	Expr e2=(Expr)visit(ctx.e2);
+	String op = ctx.eq.getText();
+		return new Equality(e1,e2,op);
+	}
 
 	@Override
 	public AST visitStringAssign(implParser.StringAssignContext ctx) {
@@ -151,42 +153,8 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	
-	@Override
-	public AST visitEquals(implParser.EqualsContext ctx) {
-		Expr v1=(Expr)visit(ctx.e1);
-		Expr v2=(Expr)visit(ctx.e2);
-	return new Equal(v1,v2);
-	}
-
-	@Override
-	public AST visitGreaterThan(implParser.GreaterThanContext ctx) {
-		Expr v1=(Expr)visit(ctx.e1);
-		Expr v2=(Expr)visit(ctx.e2);
-	return new GreaterThan(v1,v2);
-	}
-
-	@Override
-	public AST visitLesserThan(implParser.LesserThanContext ctx) {
-		Expr v1=(Expr)visit(ctx.e1);
-		Expr v2=(Expr)visit(ctx.e2);
-	return new LesserThan(v1,v2);
-	}
-
-	@Override
-	public AST visitLesserThanOrEquals(implParser.LesserThanOrEqualsContext ctx) {
-		Expr v1=(Expr)visit(ctx.e1);
-		Expr v2=(Expr)visit(ctx.e2);
-	return new LesserThanOrEquals(v1,v2);
-	}
-
-	@Override
-	public AST visitGreaterThanOrEquals(implParser.GreaterThanOrEqualsContext ctx) {
-		Expr v1=(Expr)visit(ctx.e1);
-		Expr v2=(Expr)visit(ctx.e2);
-	return new GreaterThanOrEquals(v1,v2);
-	}
-
 	@Override
 	public AST visitLogicalOr(implParser.LogicalOrContext ctx) {
 		Condition v1=(Condition)visit(ctx.con1);
@@ -200,6 +168,7 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 		Condition v2=(Condition)visit(ctx.con2);
 		return new LogicalAnd(v1,v2);
 	}
+
 }
 
 

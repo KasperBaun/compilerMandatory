@@ -1,9 +1,14 @@
+/* Example program for impl that tests many the features required in
+the assignment */
 
-n = 10;
-result = 0;
-while(n!=0){
-    result=result+1;
-    n = n-1;
+n=49;
+k=6;
+result=1;
+
+while(n!=k && k!=0){
+  result=result*n/k;
+  n=n-1;
+  k=k-1;
 }
-output result;
 
+output result;
