@@ -102,8 +102,9 @@ class While extends Command{
 	this.c=c; this.body=body;
     }
     public void eval(Environment env){
-	while (c.eval(env))
-	    body.eval(env);
+	    while (c.eval(env)){
+	        visitSingleCommand(body)
+        }
     }
 }
 
@@ -143,7 +144,10 @@ class Unequal extends Condition{
     Expr e1,e2;
     Unequal(Expr e1,Expr e2){this.e1=e1; this.e2=e2;}
     public Boolean eval(Environment env){
-	return !e1.eval(env).equals(e2.eval(env));
+        System.out.println("e1: " + e1.eval(env));
+        System.out.println("e2: " + e2.eval(env));
+        System.out.println("unequal: " + ((e1.eval(env)!=(e2.eval(env)))));
+	return (e1.eval(env)!=(e2.eval(env)));
     }
  
 }

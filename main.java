@@ -79,7 +79,7 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 
     public AST visitWhileLoop(implParser.WhileLoopContext ctx){
 	Condition c=(Condition)visit(ctx.c);
-	Command body=(Command)visit(ctx.p);
+	while(ctx.c)
 	return new While(c,body);
     }
 
