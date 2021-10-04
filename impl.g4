@@ -36,7 +36,7 @@ condi:
 
 
 ID			: ALPHA(ALPHA|NUM)* ;
-FLOAT		: '-'?NUM+ ('.' NUM+)? ;
+FLOAT		: NUM+ ('.' NUM+)? ;
 
 ALPHA		: [a-zA-Z_ÆØÅæøå] ;
 NUM			: [0-9] ;

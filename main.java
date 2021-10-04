@@ -91,10 +91,11 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 	}
 
 	public AST visitForLoop(implParser.ForLoopContext ctx) {
+		String id = ctx.x.getText();
 		Expr i=(Expr)visit(ctx.i);
 		Expr n=(Expr)visit(ctx.n);
 		Command body=(Command)visit(ctx.p);
-		return new For(i,n,body);
+		return new For(id,i,n,body);
 	}
     
     public AST visitParenthesis(implParser.ParenthesisContext ctx){
@@ -144,14 +145,17 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 
 	@Override
 	public AST visitArrayAssign(implParser.ArrayAssignContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		String id = ctx.x.getText();
+		Expr i = (Expr)visit(ctx.i);
+ 		Expr e=(Expr)visit(ctx.e);
+		return new ArrayAssignment(id,i,e);
 	}
 
 	@Override
 	public AST visitArray(implParser.ArrayContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		String id = ctx.x.getText();
+		Expr e = (Expr)visit(ctx.e);
+		return new Array(id,e);
 	}
 
 	

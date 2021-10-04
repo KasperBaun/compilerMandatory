@@ -1,5 +1,5 @@
 /* Example program for impl that tests many the features required in
-the assignment
+the assignment */
 
 n=49;
 k=6;
@@ -12,8 +12,7 @@ while(n!=k && k!=0){
 }
 
 output result;
-*/
-/*
+
 n=100;
 
 for(i=2..n){
@@ -30,4 +29,3 @@ for(i=2..n){
     }
   }
 }
-*/

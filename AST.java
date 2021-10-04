@@ -53,6 +53,17 @@ class Variable extends Expr{
     }
 }
 
+class Array extends Expr{
+    String id;
+    Expr i;
+    Array(String id, Expr i){this.id=id; this.i=i;}
+    public Double eval(Environment env){
+        String name = id+"["+i.eval(env).intValue()+"]";
+        //System.out.println("Name: "+name);
+	return env.getVariable(name);
+    }
+}
+
 abstract class Command extends AST{
     abstract public void eval(Environment env);
 }
@@ -81,6 +92,20 @@ class Assignment extends Command{
     public void eval(Environment env){
 	Double d=e.eval(env);
 	env.setVariable(v,d);
+    }
+}
+
+class ArrayAssignment extends Command{
+    String id;
+    Expr i,e;
+    ArrayAssignment(String id,Expr i, Expr e){
+	this.id=id; this.i=i; this.e=e;
+    }
+    public void eval(Environment env){
+	Double d=e.eval(env);
+    int index = i.eval(env).intValue();
+    String array=(id+"["+index+"]");
+	env.setVariable(array,d);
     }
 }
 
@@ -121,19 +146,28 @@ class If extends Command{
 }
 
 class For extends Command{
+    String id;
     Expr i,n;
     Command body;
-    For(Expr i,Expr n, Command body){
-        this.i=i; this.n=n; this.body=body;
+    For(String id, Expr i,Expr n, Command body){
+        this.id=id; this.i=i; this.n=n; this.body=body;
     }
+
     public void eval(Environment env){
-        double index;
-        double maxIndex = n.eval(env);
-        for(index = i.eval(env); index<maxIndex; index++){
+        env.setVariable(id, i.eval(env));
+        //System.out.println("i out of loop : "+i.eval(env));
+        int index;
+        int end = n.eval(env).intValue();
+        for(index = i.eval(env).intValue(); index<end; index++){
+            //System.out.println("i in loop : "+env.getVariable(id));
+            //System.out.println("index in loop : "+index);
+            //System.out.println("n in loop : "+n.eval(env));
             body.eval(env);
+            env.setVariable(id, env.getVariable(id)+1);            
         }
     }
 }
+
 
 
 abstract class Condition extends AST{
