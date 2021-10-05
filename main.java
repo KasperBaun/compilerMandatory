@@ -36,7 +36,7 @@ public class main {
 	// Construct an interpreter and run it on the parse tree
 	//Interpreter interpreter = new Interpreter();
 	Command p = (Command) new AstMaker().visit(parseTree);
-	p.eval(new Environment());
+	p.eval(new Environment(),new CommandEnvironment());
     }
 }
 
@@ -127,7 +127,7 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
     }
 
     public AST visitConstant(implParser.ConstantContext ctx){
-	return new Constant(Double.parseDouble(ctx.c.getText())); 
+	return new Constant(new Value(Integer.parseInt(ctx.c.getText())));
     };
 
     public AST visitEquality(implParser.EqualityContext ctx){
@@ -174,6 +174,7 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 	}
 
 }
+
 
 
 
