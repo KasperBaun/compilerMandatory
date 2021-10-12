@@ -28,9 +28,10 @@ expr:
 	;
 	
 condi: 
-	  con1=condi  op='&&' con2=condi	 						# LogicalAnd
+	  e1=expr op='!=' e2=expr 									# Not
+	| con1=condi  op='&&' con2=condi	 						# LogicalAnd
 	| con1=condi  op='||' con2=condi							# LogicalOr
-	| e1=expr op=('=='|'!='|'>'|'>='|'<'|'<=') e2=expr 		# Equality
+	| e1=expr op=('=='|'!='|'>'|'>='|'<'|'<=') e2=expr 			# Equality
 	;  
 
 

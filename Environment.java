@@ -43,22 +43,3 @@ class Environment {
     }   
 }
 
-class CommandEnvironment{
-    private HashMap<String,Command> funDefs = new HashMap<String,Command>();
-    public CommandEnvironment() { }	
-    public void setCommand(String name, Command f) {
-	funDefs.put(name, f);
-    }    
-    public Command getFunction(String name){
-	Command f = funDefs.get(name); 
-	if (f == null) faux.error("Function not defined: "+name); 
-	return f;
-    }
-}
-
-class faux{ // collection of non-OO auxiliary functions (currently just error)
-    public static void error(String msg){
-	System.err.println("Interpreter error: "+msg);
-	System.exit(-1);
-    }
-}

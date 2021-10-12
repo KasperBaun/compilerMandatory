@@ -1,4 +1,3 @@
-import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 import org.antlr.v4.runtime.CharStreams;
@@ -36,7 +35,7 @@ public class main {
 	// Construct an interpreter and run it on the parse tree
 	//Interpreter interpreter = new Interpreter();
 	Command p = (Command) new AstMaker().visit(parseTree);
-	p.eval(new Environment(),new CommandEnvironment());
+	p.eval(new Environment());
     }
 }
 
@@ -150,7 +149,13 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 		Expr e = (Expr)visit(ctx.e);
 		return new Array(id,e);
 	}
-
+	
+	public AST visitNot(implParser.NotContext ctx){
+		Expr e1=(Expr)visit(ctx.e1);
+		Expr e2=(Expr)visit(ctx.e2);
+		String op = ctx.op.getText();
+			return new Not(e1,e2,op);
+	}
 
     public AST visitEquality(implParser.EqualityContext ctx){
 		Expr e1=(Expr)visit(ctx.e1);
