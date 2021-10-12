@@ -91,11 +91,11 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 	}
 
 	public AST visitForLoop(implParser.ForLoopContext ctx) {
-		String id = ctx.x.getText();
-		Expr i=(Expr)visit(ctx.i);
+		String i = ctx.x.getText();
+		Expr index=(Expr)visit(ctx.i);
 		Expr n=(Expr)visit(ctx.n);
 		Command body=(Command)visit(ctx.p);
-		return new For(id,i,n,body);
+		return new For(i,index,n,body);
 	}
     
     public AST visitParenthesis(implParser.ParenthesisContext ctx){
@@ -130,13 +130,6 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 	return new Constant(new Value(Integer.parseInt(ctx.c.getText())));
     };
 
-    public AST visitEquality(implParser.EqualityContext ctx){
-	Expr e1=(Expr)visit(ctx.e1);
-	Expr e2=(Expr)visit(ctx.e2);
-	String op = ctx.eq.getText();
-		return new Equality(e1,e2,op);
-	}
-
 	@Override
 	public AST visitStringAssign(implParser.StringAssignContext ctx) {
 		// TODO Auto-generated method stub
@@ -158,6 +151,13 @@ class AstMaker extends AbstractParseTreeVisitor<AST> implements implVisitor<AST>
 		return new Array(id,e);
 	}
 
+
+    public AST visitEquality(implParser.EqualityContext ctx){
+		Expr e1=(Expr)visit(ctx.e1);
+		Expr e2=(Expr)visit(ctx.e2);
+		String op = ctx.op.getText();
+			return new Equality(e1,e2,op);
+	}
 	
 	@Override
 	public AST visitLogicalOr(implParser.LogicalOrContext ctx) {

@@ -83,7 +83,7 @@ class Variable extends Expr{
 
 class Array extends Expr{
     String id;
-    Expr i;
+    Expr i,e;
     Array(String id, Expr i){this.id=id; this.i=i;}
     public Value eval(Environment env, CommandEnvironment cmdEnv){
         Value v1 = i.eval(env, cmdEnv);
@@ -92,7 +92,7 @@ class Array extends Expr{
             x = (int) Math.round(v1.i);
         }
         String name = id+"["+x+"]";
-        //System.out.println("Name: "+name);
+        //System.out.println("Name: "+name+" = "+env.getVariable(name));
 	return env.getVariable(name);
     }
 }
@@ -142,9 +142,11 @@ class ArrayAssignment extends Command{
         int x = 0;
         if(v1.valuetype==Type.DOUBLETYPE){
             x = (int) Math.round(v1.i);
+            //System.out.println("x er : "+x);
         }
     String array=(id+"["+x+"]");
     if(v2.valuetype==Type.DOUBLETYPE){
+        //System.out.println(array+ " = "+ v2.i);
 	env.setVariable(array,v2);}
     else faux.error("Error in ArrayAssigment - v2!=DOUBLETYPE");
     }
@@ -171,6 +173,7 @@ class While extends Command{
         Value con = c.eval(env,cmdEnv);
         if(con.valuetype==Type.BOOLTYPE){
 	    while (c.eval(env,cmdEnv).b){
+            //System.out.println("Vi er i while-loop");
 	        body.eval(env,cmdEnv);
         }
     }
@@ -186,38 +189,37 @@ class If extends Command{
     public void eval(Environment env, CommandEnvironment cmdEnv)
     {
         Value con = c.eval(env,cmdEnv);
-        if(con.valuetype==Type.BOOLTYPE){
+        if(con.valuetype==Type.BOOLTYPE&&con.b==true){
 	    body.eval(env,cmdEnv);
     }
     }
 }
 
 class For extends Command{
-    String id;
-    Expr i,n;
+    String i;
+    Expr index,n;
     Command body;
-    For(String id, Expr i,Expr n, Command body){
-        this.id=id; this.i=i; this.n=n; this.body=body;
+    For(String i, Expr index,Expr n, Command body){
+        this.i=i; this.index=index; this.n=n; this.body=body;
     }
 
     public void eval(Environment env, CommandEnvironment cmdEnv){
-        env.setVariable(id, i.eval(env,cmdEnv));
+        env.setVariable(i, index.eval(env, cmdEnv));
+        //System.out.println(i+index.eval(env, cmdEnv).i);
         //System.out.println("i out of loop : "+i.eval(env));
-        Value v1 = i.eval(env, cmdEnv);
+        Value v1 = index.eval(env, cmdEnv);
+        //System.out.println(v1.i);
         Value v2 = n.eval(env, cmdEnv);
-        int index = 0;
-        int end = 0;
+        //System.out.println(v2.i);
         if(v1.valuetype==Type.DOUBLETYPE &&
            v2.valuetype==Type.DOUBLETYPE){
-                index = (int) Math.round(v1.i);
-                end   = (int) Math.round(v2.i);
+            for(env.getVariable(i); env.getVariable(i).i<n.eval(env,cmdEnv).i; env.setVariable(i, new Value(env.getVariable(i).i+1))){
+                //System.out.println("i in loop : "+env.getVariable(id));
+                //System.out.println("index in loop : "+env.getVariable(i).i);
+                //System.out.println("n in loop : "+n.eval(env));
+                body.eval(env,cmdEnv); 
            }
-        for(int i = index; i<end; i++){
-            //System.out.println("i in loop : "+env.getVariable(id));
-            //System.out.println("index in loop : "+index);
-            //System.out.println("n in loop : "+n.eval(env));
-            body.eval(env,cmdEnv);
-            env.setVariable(id, new Value(env.getVariable(id).i+1));            
+                   
         }
     }
 }
@@ -237,6 +239,8 @@ class Equality extends Condition{
         Value v2 = e2.eval(env,cmdEnv);
         if(op.equals("==")){
            if(v1.valuetype==Type.DOUBLETYPE && v2.valuetype==Type.DOUBLETYPE)
+           //System.out.println("Det virker"+"V1: "+v1.valuetype+" V2: "+v2.valuetype);
+           //System.out.println("Value : "+(v1.i==v2.i));
            return new Value(v1.i==v2.i);
         }
         if(op.equals("!=")){

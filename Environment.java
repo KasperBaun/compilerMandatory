@@ -15,8 +15,8 @@ class Value {
 	if (valuetype==Type.BOOLTYPE){
 	    return ""+b;
 	}
-	return ""+i;
-    }
+	if(valuetype==Type.DOUBLETYPE) return ""+i;
+    return null;}
 }
 
 class Environment {
@@ -28,7 +28,9 @@ class Environment {
     
     public Value getVariable(String name){
 	Value value = variableValues.get(name); 
-	if (value == null) { System.err.println("Variable not defined: "+name); System.exit(-1); }
+	if (value == null) { 
+        System.err.println("Variable not defined: "+name); 
+        System.exit(-1); }
 	return value;
     }
     
